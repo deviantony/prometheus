@@ -3,9 +3,11 @@ version: '3.8'
 services:
   node_exporter:
     image: quay.io/prometheus/node-exporter:latest
-    container_name: node_exporter
     command:
       - '--path.rootfs=/host'
+      - '--collector.textfile.directory=/etc/node-exporter/'
+      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
+      - '--no-collector.ipvs'      
     network_mode: host
     pid: host
     restart: unless-stopped
